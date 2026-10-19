@@ -2,6 +2,12 @@
 
 A fast, print-friendly search tool for the Ontario Drug Benefit (ODB) formulary, designed for prescribers and pharmacists. Runs entirely as a static site on GitHub Pages — no backend required.
 
+## Current data
+
+**Formulary XML date:** 2026-09-22
+
+The formulary date is also shown in the site header and on every printout.
+
 ## Features
 
 - Search by generic name (ingredient), brand name, or DIN
@@ -26,9 +32,14 @@ When a new XML is released:
    ```
    python3 build.py
    ```
-3. Commit and push both files:
+   The build copies the XML's `createDate` into `formulary.json` as `generated`, which the site displays as the formulary date. To check the date of a downloaded XML:
    ```
-   git add formulary.xml formulary.json
+   head -c 200 formulary.xml
+   ```
+3. Update the formulary XML date under **Current data** at the top of this README
+4. Commit and push:
+   ```
+   git add formulary.xml formulary.json README.md
    git commit -m "Update formulary data to YYYY-MM-DD"
    git push
    ```
