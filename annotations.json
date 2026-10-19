@@ -1,0 +1,10 @@
+{
+  "_comment": "Hand-maintained dose notes, keyed by DIN. build.py attaches each note to the formulary entry containing that DIN. Survives formulary XML updates.",
+  "02540258": "0.25 mg / 0.5 mg dose pen",
+  "02568020": "0.25 mg / 0.5 mg dose pen",
+  "02471477": "0.25 mg / 0.5 mg dose pen",
+  "02567806": "0.25 mg / 0.5 mg dose pen",
+  "02471469": "1 mg dose pen",
+  "02567814": "1 mg dose pen",
+  "02568012": "1 mg dose pen"
+}

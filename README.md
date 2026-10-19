@@ -48,12 +48,23 @@ When a new XML is released:
 
 GitHub Pages will redeploy automatically within a minute or two.
 
+## Dose notes
+
+The formulary XML lists pens by concentration only (e.g. Ozempic "1.34mg/mL"), not by the dose they deliver. To label them, add the DIN and a short note to `annotations.json`:
+
+```json
+"02471469": "1 mg dose pen"
+```
+
+Then rerun `python3 build.py`. The note shows as a blue tag in the results table, on the drug page and on printouts, and is searchable (e.g. "ozempic 1mg"). The build warns if an annotated DIN is no longer in the formulary.
+
 ## Files
 
 | File | Purpose |
 |---|---|
 | `formulary.xml` | Source data from Ontario government (do not edit manually) |
-| `build.py` | Converts `formulary.xml` → `formulary.json` |
+| `annotations.json` | Hand-maintained dose notes keyed by DIN (e.g. Ozempic "1 mg dose pen") |
+| `build.py` | Converts `formulary.xml` + `annotations.json` → `formulary.json` |
 | `formulary.json` | Processed data served to the browser (generated — do not edit manually) |
 | `index.html` | Main page |
 | `style.css` | Styles including print layout |

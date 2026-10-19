@@ -1,8 +1,22 @@
 import xml.etree.ElementTree as ET
 import json
+import os
 
 
-def build_formulary(input_file='formulary.xml', output_file='formulary.json'):
+def load_annotations(path):
+    # Hand-maintained dose notes keyed by DIN (keys starting with "_" are comments)
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding='utf-8') as f:
+        data = json.load(f)
+    return {din: note for din, note in data.items() if not din.startswith('_')}
+
+
+def build_formulary(input_file='formulary.xml', output_file='formulary.json',
+                    annotations_file='annotations.json'):
+    annotations = load_annotations(annotations_file)
+    used_annotations = set()
+
     print(f'Parsing {input_file}...')
     tree = ET.parse(input_file)
     root = tree.getroot()
@@ -61,6 +75,7 @@ def build_formulary(input_file='formulary.xml', output_file='formulary.json'):
 
                     products = []
                     search_names = {generic.lower()}
+                    dose_notes = []
                     any_benefit = False
 
                     for drug in pcg9.findall('drug'):
@@ -75,6 +90,15 @@ def build_formulary(input_file='formulary.xml', output_file='formulary.json'):
                         search_names.add(brand_name.lower())
 
                         search_names.add(din)
+
+                        note = annotations.get(din)
+                        if note:
+                            used_annotations.add(din)
+                            if note not in dose_notes:
+                                dose_notes.append(note)
+                            # Searchable both as written and without spaces (e.g. "1mg")
+                            search_names.add(note.lower())
+                            search_names.add(note.lower().replace(' ', ''))
 
                         prod = {'din': din, 'name': brand_name}
                         if not_benefit:
@@ -101,6 +125,8 @@ def build_formulary(input_file='formulary.xml', output_file='formulary.json'):
                         'searchNames': sorted(search_names),
                     }
 
+                    if dose_notes:
+                        entry['doseNote'] = ' / '.join(dose_notes)
                     if pcg9_note:
                         entry['note'] = pcg9_note
                     if lcc_id and has_lu_notes:
@@ -116,6 +142,10 @@ def build_formulary(input_file='formulary.xml', output_file='formulary.json'):
         json.dump(output, f, ensure_ascii=False, separators=(',', ':'))
 
     print(f'Done. {len(entries)} entries written to {output_file}')
+
+    unused = sorted(set(annotations) - used_annotations)
+    if unused:
+        print(f'Warning: annotations for DINs not in formulary: {", ".join(unused)}')
 
 
 if __name__ == '__main__':

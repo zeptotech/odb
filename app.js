@@ -117,6 +117,7 @@ function buildDrugPage(drug) {
   if (brandNames) h += `<div class="print-title-brands">${esc(brandNames)}</div>`;
   h += `<div class="print-title-name">${esc(drug.genericName)}</div>`;
   h += `<div class="print-title-meta">${esc(drug.category)} \u2014 ${esc(drug.strength)} \u2014 ${esc(drug.form)}</div>`;
+  if (drug.doseNote) h += `<div class="print-title-dose">${esc(drug.doseNote)}</div>`;
   h += `<div class="print-title-source">Ontario Drug Benefit Formulary \u2014 ${esc(formularyDate)}</div>`;
   h += '</div>';
 
@@ -127,6 +128,8 @@ function buildDrugPage(drug) {
   if (brandNames) h += `<div class="drug-page-brands">${esc(brandNames)}</div>`;
   h += `<div class="drug-page-name">${esc(drug.genericName)}</div>`;
   h += `<div class="drug-page-meta">${esc(drug.category)} \u2014 ${esc(drug.strength)} \u2014 ${esc(drug.form)}</div>`;
+  // Hand-maintained dose note from annotations.json (e.g. "1 mg dose pen")
+  if (drug.doseNote) h += `<div class="dose-note dose-note-page">${esc(drug.doseNote)}</div>`;
   h += '<div class="drug-page-badges">';
   h += statusBadge(drug.status);
   if (drug.luCodes && drug.luCodes.length) {
@@ -230,7 +233,7 @@ function renderTable(drugs) {
         <div class="category-label">${esc(drug.category)}</div>
       </td>
       <td>${esc(drug.strength)}</td>
-      <td>${esc(drug.form)}</td>
+      <td>${esc(drug.form)}${drug.doseNote ? `<div class="dose-note">${esc(drug.doseNote)}</div>` : ''}</td>
       <td>${statusBadge(drug.status)}</td>
       <td>${drug.luCodes && drug.luCodes.length ? drug.luCodes.map(c => `<span class="lu-code">${esc(c)}</span>`).join(', ') : '<span style="color:#9ca3af">&mdash;</span>'}</td>
       <td>${drug.luPeriod ? periodPill(drug.luPeriod) : '<span style="color:#9ca3af">&mdash;</span>'}</td>
