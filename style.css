@@ -487,6 +487,16 @@ footer {
   font-size: 12px;
 }
 
+footer .disclaimer {
+  max-width: 640px;
+  margin: 0.5rem auto 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+footer .disclaimer a { color: inherit; overflow-wrap: anywhere; }
+
 /* ─── Print ──────────────────────────────────────────────── */
 @media print {
   @page { size: portrait; margin: 1.5cm; }
