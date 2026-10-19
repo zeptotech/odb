@@ -162,6 +162,16 @@ function goBack() {
   renderSearchView();
 }
 
+// Returns to the blank search page (clicking the site title).
+// Clears the saved query so the previous results aren't restored.
+function goHome(event) {
+  event.preventDefault();
+  lastQuery = '';
+  document.getElementById('search-input').value = '';
+  goBack();
+  search('');
+}
+
 // ─── Search ──────────────────────────────────────────────────
 // Filters allDrugs against the query and renders the results table.
 // Each search term must match at least one of the drug's searchNames
