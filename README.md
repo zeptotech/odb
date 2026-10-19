@@ -2,6 +2,8 @@
 
 A fast, print-friendly search tool for the Ontario Drug Benefit (ODB) formulary, designed for prescribers and pharmacists. Runs entirely as a static site on GitHub Pages — no backend required.
 
+**Live site: https://zeptotech.github.io/odb/**
+
 ## Current data
 
 **Formulary XML date:** 2026-09-22
@@ -18,7 +20,7 @@ The formulary date is also shown in the site header and on every printout.
 
 ## Using the site
 
-Go to the GitHub Pages URL for this repo. Type any part of a drug name, brand name, or an 8-digit DIN into the search box.
+Go to **[zeptotech.github.io/odb](https://zeptotech.github.io/odb/)**. Type any part of a drug name, brand name, or an 8-digit DIN into the search box.
 
 ## Updating the formulary data
 
