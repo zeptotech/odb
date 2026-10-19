@@ -243,7 +243,7 @@ function renderTable(drugs) {
         <div class="category-label">${esc(drug.category)}</div>
       </td>
       <td>${esc(drug.strength)}</td>
-      <td>${esc(drug.form)}${drug.doseNote ? `<div class="dose-note">${esc(drug.doseNote)}</div>` : ''}</td>
+      <td><div>${esc(drug.form)}</div>${drug.doseNote ? `<div class="dose-note">${esc(drug.doseNote)}</div>` : ''}</td>
       <td>${statusBadge(drug.status)}</td>
       <td>${drug.luCodes && drug.luCodes.length ? drug.luCodes.map(c => `<span class="lu-code">${esc(c)}</span>`).join(', ') : '<span style="color:#9ca3af">&mdash;</span>'}</td>
       <td>${drug.luPeriod ? periodPill(drug.luPeriod) : '<span style="color:#9ca3af">&mdash;</span>'}</td>
